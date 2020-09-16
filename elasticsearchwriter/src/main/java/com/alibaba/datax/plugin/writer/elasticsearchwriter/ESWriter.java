@@ -341,8 +341,10 @@ public class ESWriter extends Writer {
                                 break;
                             case DATE:
                                 try {
-                                    String dateStr = getDateStr(columnList.get(i), column);
-                                    data.put(columnName, dateStr);
+                                    if (column != null || column.getRawData() != null) {
+                                        String dateStr = getDateStr(columnList.get(i), column);
+                                        data.put(columnName, dateStr);
+                                    }
                                 } catch (Exception e) {
                                     getTaskPluginCollector().collectDirtyRecord(record, String.format("时间类型解析失败 [%s:%s] exception: %s", columnName, column.toString(), e.toString()));
                                 }
